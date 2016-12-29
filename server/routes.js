@@ -70,15 +70,11 @@ module.exports = {
       var email = getValueFromCookie('node-tutorial-email', req.headers.cookie);
       console.log('Email found in cookie: ', email);
       if (token) {
-        res.writeHead(200, {'Content-Type': 'text/html'});
-  res.write('<div><h1>Your calendar</h1></div>');
-
-  var queryParams = {
-    '$select': 'Subject,Start,End',
-    '$orderby': 'Start/DateTime desc',
-    '$top': 10
-  };
-
+      var queryParams = {
+        '$select': 'Subject,Start,End',
+        '$orderby': 'Start/DateTime desc',
+        '$top': 10
+      };
   // Set the API endpoint to use the v2.0 endpoint
   outlook.base.setApiEndpoint('https://outlook.office.com/api/v2.0');
   // Set the anchor mailbox to the user's SMTP address
@@ -91,11 +87,9 @@ module.exports = {
     function(error, result){
       if (error) {
         console.log('getEvents returned an error: ' + error);
-        res.write('<p>ERROR: ' + error + '</p>');
-        res.end();
       } else if (result) {
-
-        return result;
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify({result}, null, 3));
         /*
       console.log("MES RESULTATS");
         console.log(result);
