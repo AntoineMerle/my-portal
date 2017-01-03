@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-var myUrl="http://localhost:8001/calendar";
+var myUrl="http://localhost:8001/home";
 
 class Calendar extends Component {
   constructor(props){
@@ -23,7 +23,7 @@ class Calendar extends Component {
   }
   render() {
     return (
-      <div>{this.state.result}</div>
+      <div>please sign</div>
     );
   }
 }

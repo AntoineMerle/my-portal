@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Calendar from './Calendar';
+import home from './Home';
 import './index.css';
 
 ReactDOM.render(
-  <Calendar />,
+  <home/>,
   document.getElementById('root')
 );

@@ -7,12 +7,12 @@ var port = process.env.PORT || 8001; //définition du port sur lequel on va éco
 //Export des modules
 module.exports = {
 
-  home: function(req, res) {
+  home: function(req, res, next) {
     console.log('Request handler \'home\' was called.');
     res.send('<div id="root"><p>Please <a href="' + authHelper.getAuthUrl() + '">sign in</a> with your Office 365 or Outlook.com account.</p></div>');
   },
 
-  mail : function(req,res){
+  mail : function(req,res, next){
 
       getAccessToken(req, res, function(error, token) {
         console.log('Token found in cookie: ', token);
@@ -64,9 +64,10 @@ module.exports = {
       });
   },
 
-  calendar : function(req, res){
+  calendar : function(req, res, next){
     getAccessToken(req, res, function(error, token) {
       console.log('Token found in cookie: ', token);
+      console.log(req.headers.cookie);
       var email = getValueFromCookie('node-tutorial-email', req.headers.cookie);
       console.log('Email found in cookie: ', email);
       if (token) {
@@ -90,6 +91,7 @@ module.exports = {
       } else if (result) {
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify({result}, null, 3));
+        return result;
         /*
       console.log("MES RESULTATS");
         console.log(result);
@@ -113,7 +115,7 @@ module.exports = {
     });
   },
 
-  authorize: function(req, res) {
+  authorize: function(req, res, next) {
     console.log('Request handler \'authorize\' was called.');
 
     // The authorization code is passed as a query parameter

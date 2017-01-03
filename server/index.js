@@ -10,10 +10,14 @@ var server = http.createServer(app).listen(port,function(){
   console.log("Listing on port : "+ port); //on affiche le port
 });
 
-
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 //Appel de la fonction home lorsque l'utilisateur arrive sur la page "/"
-app.get('/',routes.home);
+app.get('/home',routes.home);
 
 //Appel de la fonction authorize lorsque l'utilisateur arrive sur la page "/authorize"
 app.get('/authorize',routes.authorize);
