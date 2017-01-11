@@ -65,6 +65,10 @@ module.exports = {
   },
 
   calendar : function(req, res, next){
+    //Simuler un SignIn
+
+
+
     getAccessToken(req, res, function(error, token) {
       console.log('Token found in cookie: ', token);
       console.log(req.headers.cookie);
@@ -72,17 +76,18 @@ module.exports = {
       console.log('Email found in cookie: ', email);
       if (token) {
       var queryParams = {
-        '$select': 'Subject,Start,End',
+        '$select': 'Subject,Start,End,Location',
         '$orderby': 'Start/DateTime desc',
         '$top': 10
       };
   // Set the API endpoint to use the v2.0 endpoint
-  outlook.base.setApiEndpoint('https://outlook.office.com/api/v2.0');
+  outlook.base.setApiEndpoint('https://outlook.office.com/api/v2.0/');
+
   // Set the anchor mailbox to the user's SMTP address
   outlook.base.setAnchorMailbox(email);
   // Set the preferred time zone.
   // The API will return event date/times in this time zone.
-  outlook.base.setPreferredTimeZone('Eastern Standard Time');
+  outlook.base.setPreferredTimeZone('GMT Standard Time');
 
   outlook.calendar.getEvents({token: token, odataParams: queryParams},
     function(error, result){
